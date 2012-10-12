@@ -47,7 +47,7 @@ NSString *quote[4] = {
 	// огнооны текстийг авна
 	NSString *dateText = MSHookIvar<NSString *>(dateLabel, "_text");
 	
-	// огнооны өмнө хүссэн текстээ оруулна
+	// огнооны өмнө хүссэн текстээ оруулна, энд огноо харуулж байгаа хэсгийг өөрчлөх боломжтойг харуулж байна
 	NSString *newDateLabel = [NSString stringWithFormat:@"%@ %@", @"Өнөөдөр:", dateText];
 
 	// Өөрчлөлтийг оруулж шинэчилнэ
