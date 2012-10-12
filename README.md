@@ -22,7 +22,7 @@ $ scp LockQuote_1.0-1_iphoneos-arm.deb root@192.168.1.69:.
 гэх маягаар scp ашиглан хуулаарай. IP хаяг болон програмынхаа үүссэн хувилбараа өөртөө тааруулан өөрчлөхөө мартав.
 Дараа нь iPhone руугаа ssh-ээр ороод
 
-# dpkg -i LockQuote_1.0-1_iphoneos-arm.deb && killall SpringBoard
+ # dpkg -i LockQuote_1.0-1_iphoneos-arm.deb && killall SpringBoard
 
 гэж хуулсан хувилбартаа тааруулан багцын нэрээ өөрчилж ажиллуулаарай.
 
