@@ -1,0 +1,11 @@
+Package: LockQuote
+Name: LockQuote
+Version: 1.0
+Depends: firmware (>= 5.0), mobilesubstrate
+Architecture: iphoneos-arm
+Homepage: http://mongolian-it.blogspot.com
+Maintainer: foo_at_bar
+Author: foo_at_bar
+Section: Tweaks
+Description: LockQuote
+ It shows random quotes on locked screen.

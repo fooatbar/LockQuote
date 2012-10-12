@@ -1,0 +1,83 @@
+/**
+ * Нэр: LockQuote
+ */
+
+// Шаардлагатай толгой файлыг оруулна
+#include <TelephonyUI/TPLCDTextView.h>
+	 
+// Зүйр цэцэн үгс, алдартай хүмүүсийн хэлсэн үгийг массивт хадгална
+NSString *quote[4] = {
+	@"Сурах чигийг эрхэм болговол хандах зүг өөрөө тогтоно. \n\t\tД.Сүхбаатар",
+	@"Эрлийг сургаар\nэрдмийг хичээлээр",
+	@"Эрхэм баян\nэрдэм мэдлэг",
+	@"Биеийн хүчээр нэгийг дийлнэ\nБилгийн хүчээр мянгыг дийлнэ\nЧингис хаан"
+};
+
+// Түгжээтэй үеийн textview-г барьж огноо байх хүрээг өөрчилнө
+%hook TPLCDTextView
+
+-(void)setFrame:(CGRect)frame
+{
+	CGRect x = frame;
+/*  
+    NSLog(@"********* TLockQuote height = %f", x.size.height);
+    NSLog(@"********* TLockQuote width = %f", x.size.width);
+    NSLog(@"********* TLockQuote x = %f", x.origin.x);
+    NSLog(@"********* TLockQuote y = %f", x.origin.y);
+*/		
+	x = CGRectMake(0, x.origin.y, 320, x.size.height);
+
+	// Өөрчилсөн хүрээтэйгээр эх фунцкцийг дуудна
+	%orig(x); 	
+}	 
+
+%end
+
+// Түгжээтэй дэлгэцийг барьж цагийг шинэчлэхдээ огнооны текстийг өөрчилнө	 
+%hook SBAwayDateView
+
+- (void)updateClock{
+	// эх функцийг дуудна
+	%orig;
+	
+	// цаг, огнооны обьектыг авна
+	//TPLCDTextView *clockLabel = MSHookIvar<TPLCDTextView *>(self, "_timeLabel");
+	TPLCDTextView *dateLabel = MSHookIvar<TPLCDTextView *>(self, "_dateAndTetheringLabel");
+
+	// огнооны текстийг авна
+	NSString *dateText = MSHookIvar<NSString *>(dateLabel, "_text");
+	
+	// огнооны өмнө хүссэн текстээ оруулна
+	NSString *newDateLabel = [NSString stringWithFormat:@"%@ %@", @"Өнөөдөр:", dateText];
+
+	// Өөрчлөлтийг оруулж шинэчилнэ
+	//[clockLabel setText:@"This is test"];
+	[dateLabel setText:newDateLabel];
+
+}
+
+// Түгжээтэй дэлгэцийн цаг,огноотой хэсгийг эхлүүлэхдээ зүйр үгсээ цонхонд гаргана
+- (id)initWithFrame:(struct CGRect)arg1
+{
+	// зүйр үгсээ гаргана :)
+	UIAlertView *quoteView = [[UIAlertView alloc] init];
+	quoteView.title = @"Өдрийн ухаант үгс";
+	
+	// санамсаргүйгээр үгээ массиваас сонгоно
+	int index = arc4random_uniform(4);
+	quoteView.message = quote[index];
+	
+	[quoteView addButtonWithTitle:@"OK"];
+	[quoteView show];
+ 
+ 	// эх функцийг дуудна
+	return %orig; 	
+}
+
+%end
+
+// hook-үүдийг эхлүүлнэ
+%ctor {
+	%init
+}
+
