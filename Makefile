@@ -1,3 +1,4 @@
+SDKVERSION = 5.0
 TWEAK_NAME = LockQuote
 LockQuote_OBJCC_FILES = Tweak.xmi
 
